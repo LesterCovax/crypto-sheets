@@ -1,5 +1,6 @@
+var queryString = Math.random();
+
 function getData() {
-  var queryString = Math.random();
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   
   //
@@ -94,7 +95,6 @@ function getRate(currencyId) {
 }
 
 function getWebRate(currencyId) {
-
   //Example Output: 
   // '=IMPORTXML("https://coinmarketcap.com/currencies/zeeyx?3908288283","//span[@id=\'quote_price\']")';	
 	
