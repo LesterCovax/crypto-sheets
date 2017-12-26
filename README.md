@@ -12,7 +12,7 @@ This is a template for creating your own spreadsheet to track your cryptocurrenc
 
 There are comments in the code, and I'll add better instructions here in the future.
 
-More instructions to follow.
+*More instructions to follow.
 
 ## To Do
 
@@ -24,9 +24,9 @@ More instructions to follow.
 
 They are appreciated but not expected
 
-XRB - xrb_3ix8dfgn7hkz3choqi1qr6jgopoodh1jr1giwixzqaohks7d1f98dau45c11
-ETH - 0x7E9DDB5343a583705Ed9ADE065C0595EFB55D681
-VTC - Vo8EXgAtxCVUtMaTQECuzLD2tZU1HqLbhT
+* XRB - xrb_3ix8dfgn7hkz3choqi1qr6jgopoodh1jr1giwixzqaohks7d1f98dau45c11
+* ETH - 0x7E9DDB5343a583705Ed9ADE065C0595EFB55D681
+* VTC - Vo8EXgAtxCVUtMaTQECuzLD2tZU1HqLbhT
 
 ## License
 
