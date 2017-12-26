@@ -9,6 +9,9 @@ This is a template for creating your own spreadsheet to track your cryptocurrenc
 2. Select all of the text in the right pane and delete it (unless you have already written your own functions)
 3. Paste the contents of scripteditor.js into the pane on the right
 4. Add in as many currencies that you want to track
+5. Add triggers "Edit > Current project's triggers..."
+  1. Click "Add a new trigger"
+  2. In the "Run" dropdown, choose "getData" and choose which triggers you'd like.  I use "Time-driven/Minutes/Every 15", and "From spreadsheet/On open".
 
 There are comments in the code, and I'll add better instructions here in the future.
 
