@@ -33,14 +33,14 @@ function getData() {
 
   ssRates.getRange('B4').setValue(ABC[0]);
   ssRates.getRange('C4').setValue(ABC[1]);
-  ssRates.getRange('B4').setValue(BCD[0]);
-  ssRates.getRange('C4').setValue(BCD[1]);
-  ssRates.getRange('B4').setValue(CDE[0]);
-  ssRates.getRange('C4').setValue(CDE[1]);
+  ssRates.getRange('B5').setValue(BCD[0]);
+  ssRates.getRange('C5').setValue(BCD[1]);
+  ssRates.getRange('B6').setValue(CDE[0]);
+  ssRates.getRange('C6').setValue(CDE[1]);
   
-  ssRates.getRange('B4').setValue(ZYX);
-  ssRates.getRange('B5').setValue(YXW);
-  ssRates.getRange('B6').setValue(XWV);
+  ssRates.getRange('B7').setValue(ZYX);
+  ssRates.getRange('B8').setValue(YXW);
+  ssRates.getRange('B9').setValue(XWV);
 
   //VTC wallet balances
   //Add more as needed with different variable names
