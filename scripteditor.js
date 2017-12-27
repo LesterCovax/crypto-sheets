@@ -94,6 +94,37 @@ function getRate(currencyId) {
   return parseFloat(data[0]['price_usd']);
 }
 
+function getChangeHour(currencyId) {
+
+  var url = 'https://api.coinmarketcap.com/v1/ticker/' + currencyId + '/';
+  var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
+  var json = response.getContentText();
+  var data = JSON.parse(json);
+
+  return parseFloat(data[0]['percent_change_1h']);
+}
+
+function getChangeDay(currencyId) {
+
+  var url = 'https://api.coinmarketcap.com/v1/ticker/' + currencyId + '/';
+  var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
+  var json = response.getContentText();
+  var data = JSON.parse(json);
+
+  return parseFloat(data[0]['percent_change_24h']);
+}
+
+function getChangeWeek(currencyId) {
+
+  var url = 'https://api.coinmarketcap.com/v1/ticker/' + currencyId + '/';
+  var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
+  var json = response.getContentText();
+  var data = JSON.parse(json);
+
+  return parseFloat(data[0]['percent_change_7d']);
+}
+
+
 function getWebRate(currencyId) {
   //Example Output: 
   // '=IMPORTXML("https://coinmarketcap.com/currencies/zeeyx?3908288283","//span[@id=\'quote_price\']")';	
