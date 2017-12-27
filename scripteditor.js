@@ -31,16 +31,16 @@ function getData() {
   //Change the values in getRange() to match the cells in the 'Rates' sheet you want to userAgent
   //Use the coin symbols from above in setValue()
 
-  ssRates.getRange('B4').setValue(ABC[0]);
-  ssRates.getRange('C4').setValue(ABC[1]);
-  ssRates.getRange('B5').setValue(BCD[0]);
-  ssRates.getRange('C5').setValue(BCD[1]);
-  ssRates.getRange('B6').setValue(CDE[0]);
-  ssRates.getRange('C6').setValue(CDE[1]);
+  ssRates.getRange('B1').setValue(ABC[0]);
+  ssRates.getRange('C1').setValue(ABC[1]);
+  ssRates.getRange('B2').setValue(BCD[0]);
+  ssRates.getRange('C2').setValue(BCD[1]);
+  ssRates.getRange('B3').setValue(CDE[0]);
+  ssRates.getRange('C3').setValue(CDE[1]);
   
-  ssRates.getRange('B7').setValue(ZYX);
-  ssRates.getRange('B8').setValue(YXW);
-  ssRates.getRange('B9').setValue(XWV);
+  ssRates.getRange('B4').setValue(ZYX);
+  ssRates.getRange('B5').setValue(YXW);
+  ssRates.getRange('B6').setValue(XWV);
 
   //VTC wallet balances
   //Add more as needed with different variable names
