@@ -39,6 +39,12 @@ function getData() {
   ssRates.getRange('B5').setValue(YXW);
   ssRates.getRange('B6').setValue(XWV);
 
+  // Set Market Cap USD
+
+  ssRates.getMarketCap('F1').setValue(ABC);
+  ssRates.getMarketCap('F2').setValue(BCD);
+  ssRates.getMarketCap('F3').setValue(CDE); 	
+  	
   //VTC wallet balances
   //Add more as needed with different variable names
 
@@ -64,11 +70,22 @@ function getData() {
   ssRates.getRange('E1').setValue(EthWallet);
 }
 
-  //
+// function Market Cap USD
+
+function getMarketCap(currencyId) {
+var url = 'https://api.coinmarketcap.com/v1/ticker/' + currencyId + '/';
+var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
+var json = response.getContentText();
+var data = JSON.parse(json);
+
+return (data[0]['market_cap_usd']);
+}
+
+//
   // DON'T TOUCH ANYTHING BELOW
   // IT MAKES THE MAGIC HAPPEN
   //
-
+  
 function getEthBalance(ethApiKey,ethAddress) {
 
   var obj = JSON.parse (UrlFetchApp.fetch("https://api.etherscan.io/api?module=account&action=balance&address="+ethAddress+"&tag=latest&apikey="+ethApiKey));
