@@ -12,24 +12,20 @@ function getData() {
   //IMPORTANT: DO NOT TOUCH THIS LINE
   var apiObj = getApiObj();
 
-  //Grabbing values from CoinMarketCapAPI data
+  //Grabbing values from CoinMarketCap, either the API data, or web scrape
   //Change the variable name to match the trading symbol
-  //Change the name in the quotes (e.g. are-bees-carebears) to match the 'id' field from https://api.coinmarketcap.com/v1/ticker/
+  //Change the name in the quotes (e.g. are-bees-carebears) to match the currency 'id':
+  // - currency id is either id as found in field from https://api.coinmarketcap.com/v1/ticker/
+  // - or last part or URL for CoinMarketCap page for the currency (e.g. 'zeeyx' for https://coinmarketcap.com/currencies/zeeyx)
   //Copy/paste to add more lines as needed
   
   var ABC = getRate('are-bees-carebears', apiObj);
   var BCD = getRate('berry-cool-doge', apiObj);
   var CDE = getRate('coin-dank-enigma', apiObj);
-  
-  //Grabbing values that are on CoinMarketCap but not in the API
-  //Change the variable name to match the trading symbol
-  //Go to the CoinMarketCap page for the currency (e.g. https://coinmarketcap.com/currencies/zeeyx)
-  //Change the name in quotes (e.g. zeeyx) to match the end of the URL for your currency
-  //Copy/paste to add more lines as needed
-  
-  var ZYX = getWebRate('zeeyx');
-  var YXW = getWebRate('yaaxw');
-  var XWV = getWebRate('xoowv');
+
+  var ZYX = getRate('zeeyx', apiObj);
+  var YXW = getRate('yaaxw', apiObj);
+  var XWV = getRate('xoowv', apiObj);
 
   //Setting values in a sheet called 'Rates' (defined at the top)
   //Change the values in getRange() to match the cells in the 'Rates' sheet you want to userAgent
@@ -97,19 +93,41 @@ function getApiObj() {
 }
 
 function getRate(currencyId, apiObj) {
+  // check apiObj for requested currencyId
   var currencyData = apiObj.filter(function(obj) {
     return obj.id == currencyId;
   });
 
-  return parseFloat(currencyData[0].price_usd);
+  // if requested currencyId found, return value
+  if (currencyData.length >= 1) {
+    return parseFloat(currencyData[0].price_usd);
+  }
+
+  // if requested currencyId not found, call getSingleRate and return
+  return getSingleRate(currencyId);
+}
+
+function getSingleRate(currencyId) {
+  var url = 'https://api.coinmarketcap.com/v1/ticker/' + currencyId + '/';
+  var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
+  var json = response.getContentText();
+  var currencyData = JSON.parse(json);
+
+  // if no error, return rate from the single currency API data
+  if (!currencyData.error) {
+    return parseFloat(currencyData[0]['price_usd']);
+  }
+
+  // otherwise if API error, call getWebRate and return
+  return getWebRate(currencyId);
 }
 
 function getWebRate(currencyId) {
   //Example Output: 
-  // '=IMPORTXML("https://coinmarketcap.com/currencies/zeeyx?3908288283","//span[@id=\'quote_price\']")';	
-	
+  // '=IMPORTXML("https://coinmarketcap.com/currencies/zeeyx?3908288283","//span[@id=\'quote_price\']")';   
+    
   var coinScrape1 = '=IMPORTXML("https://coinmarketcap.com/currencies/';
-  var coinScrape2 = '","//span[@id=\'quote_price\']")';
+  var coinScrape2 = '","//span[@id=\'quote_price\']/@data-usd")';
   
   return coinScrape1 + currencyId + '?' + queryString + coinScrape2;
 }
