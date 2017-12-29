@@ -8,14 +8,18 @@ function getData() {
   //
   var ssRates = ss.getSheetByName('Rates');
 
-  //Grabbing values from CoinMarketCapAPI
+  //This fetches all the data from CoinMarketCapAPI
+  //IMPORTANT: DO NOT TOUCH THIS LINE
+  var apiObj = getApiObj();
+
+  //Grabbing values from CoinMarketCapAPI data
   //Change the variable name to match the trading symbol
   //Change the name in the quotes (e.g. are-bees-carebears) to match the 'id' field from https://api.coinmarketcap.com/v1/ticker/
   //Copy/paste to add more lines as needed
   
-  var ABC = getRate('are-bees-carebears');
-  var BCD = getRate('berry-cool-doge');
-  var CDE = getRate('coin-dank-enigma');
+  var ABC = getRate('are-bees-carebears', apiObj);
+  var BCD = getRate('berry-cool-doge', apiObj);
+  var CDE = getRate('coin-dank-enigma', apiObj);
   
   //Grabbing values that are on CoinMarketCap but not in the API
   //Change the variable name to match the trading symbol
@@ -84,14 +88,20 @@ function getVtcBalance(vtcAddress) {
   return obj;
 }
 
-function getRate(currencyId) {
-
-  var url = 'https://api.coinmarketcap.com/v1/ticker/' + currencyId + '/';
+function getApiObj() {
+  var url = 'https://api.coinmarketcap.com/v1/ticker/';
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
   var json = response.getContentText();
-  var data = JSON.parse(json);
 
-  return parseFloat(data[0]['price_usd']);
+  return JSON.parse(json);
+}
+
+function getRate(currencyId, apiObj) {
+  var currencyData = apiObj.filter(function(obj) {
+    return obj.id == currencyId;
+  });
+
+  return parseFloat(currencyData[0].price_usd);
 }
 
 function getWebRate(currencyId) {
