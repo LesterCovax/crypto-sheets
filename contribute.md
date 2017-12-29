@@ -1,35 +1,22 @@
-# Crypto Sheets
-Google Sheets script editor code for managing a cryptocurrency tracking spreadsheet
+# Crypto Sheets Contribution Guidelines
 
-## Instructions
+This script is aimed at being user friendly, with the eventual goal of users not having to edit the script at all.  Please check the open issues and add new ones for additional features or bugs.
 
-This is a template for creating your own spreadsheet to track your cryptocurrency balances and current prices.  It assumes the use of Google Sheets and the built in script editor (Tools > Script editor...).
+## This project utilizes GitFlow
 
-1. Click "Tools > Script editor..." on the menu bar
-1. Select all of the text in the right pane and delete it (unless you have already written your own functions)
-1. Paste the contents of scripteditor.js into the pane on the right
-1. Add in as many currencies that you want to track
-1. Add triggers "Edit > Current project's triggers..."
-   1. Click "Add a new trigger"
-   1. In the "Run" dropdown, choose "getData" and choose which triggers you'd like.  I use "Time-driven/Minutes/Every 15", and "From spreadsheet/On open".
+Please create new feature branches for new functionality.  These branches will then be merged into the `develop` branch for further testing and review until packaged into a new `release` and merged back into `master`.
 
-There are comments in the code, and I'll add better instructions here in the future.
+For general GitFlow guidelines and best practices, please consult [Atlassian's GitFlow Tutorial](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
 
-*More instructions to follow.
+## Chat with other devs
 
-## To Do
+I have created a gitter community at https://gitter.im/cryptosheets/development
 
-1. Add detailed instructions for configuring your own Google Sheets crypto tracker
-1. Templatize the script to pull in lists of cryptos to track, and account balances to track
-1. Historical data
+## Reddit
 
-## Donations
+Please promote the use of our subreddit for user help.  If you're a contributor to the project, feel free to request moderator privileges.  Users should also be encouraged to create GitHub issues, or create issues based on commonly seen issues.
 
-They are appreciated but not expected
-
-* XRB - xrb_3ix8dfgn7hkz3choqi1qr6jgopoodh1jr1giwixzqaohks7d1f98dau45c11
-* ETH - 0x7E9DDB5343a583705Ed9ADE065C0595EFB55D681
-* VTC - Vo8EXgAtxCVUtMaTQECuzLD2tZU1HqLbhT
+https://www.reddit.com/r/cryptosheets/
 
 ## License
 
