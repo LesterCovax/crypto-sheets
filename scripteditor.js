@@ -8,6 +8,14 @@ function getData() {
   //
   var ssRates = ss.getSheetByName('Rates');
 
+  //
+  // Currency Conversion
+  // Uncomment the line below if you need something other than USD
+  // It will pull the current rate from fixer.io
+  
+  // var targetCurrency = 'GBP'
+  if (typeof targetCurrency !== 'undefined') {conversionRate = getCurrencyConversion('USD', targetCurrency)};
+  
   //Grabbing values from CoinMarketCapAPI
   //Change the variable name to match the trading symbol
   //Change the name in the quotes (e.g. are-bees-carebears) to match the 'id' field from https://api.coinmarketcap.com/v1/ticker/
@@ -85,13 +93,17 @@ function getVtcBalance(vtcAddress) {
 }
 
 function getRate(currencyId) {
-
+  
   var url = 'https://api.coinmarketcap.com/v1/ticker/' + currencyId + '/';
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
   var json = response.getContentText();
   var data = JSON.parse(json);
-
-  return parseFloat(data[0]['price_usd']);
+  var obj = parseFloat(data[0]['price_usd']);
+  if (typeof conversionRate !== 'undefined') {
+    return conversionRate*obj;
+  } else {
+    return obj;
+  }
 }
 
 function getWebRate(currencyId) {
@@ -102,4 +114,14 @@ function getWebRate(currencyId) {
   var coinScrape2 = '","//span[@id=\'quote_price\']")';
   
   return coinScrape1 + currencyId + '?' + queryString + coinScrape2;
+}
+
+function getCurrencyConversion(currencyOne, currencyTwo) {
+  
+  var url = 'https://api.fixer.io/latest?symbols='+currencyOne.toUpperCase()+','+currencyTwo.toUpperCase();
+  var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
+  var json = response.getContentText();
+  var data = JSON.parse(json);
+  
+  return parseFloat(data['rates'][currencyTwo]);
 }
