@@ -25,7 +25,7 @@ function getData() {
 
   // ===== Coins to Track ======
   // Enter the coins you want tracked, each one on a new line, in single quotes, followed by a comma
-  // Use the value in the 'symbol' field here: https://api.coinmarketcap.com/v1/ticker/?limit=0
+  // Use the value in the 'id' field here: https://api.coinmarketcap.com/v1/ticker/?limit=0
   // ===========================
   var myCoins = [
     'ark',
