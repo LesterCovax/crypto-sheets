@@ -25,15 +25,15 @@ function getData() {
 
   // ===== Coins to Track ======
   // Enter the coins you want tracked, each one on a new line, in single quotes, followed by a comma
-  // Use the value in the 'symbol' field here: https://api.coinmarketcap.com/v1/ticker/?limit=0
+  // Use the value in the 'id' field here: https://api.coinmarketcap.com/v1/ticker/?limit=0
   // ===========================
   var myCoins = [
-    'ARK',
-    'BTC',
-    'BCH',
-    'ETH',
-    'XRB',
-    'XMR',
+    'ark',
+    'bitcoin',
+    'bitcoin-cash',
+    'ethereum',
+    'raiblocks',
+    'monero',
   ]
 
   // Creates column headers.  Don't change unless you know what you're doing.
@@ -68,11 +68,11 @@ function getData() {
   var myCoinsCount = myCoins.length;
   for (var i = 0; i < myCoinsCount; i++) {
     var n = 0;
-    while (coins[n]['symbol'] !== myCoins[i]) {
+    while (coins[n]['id'] !== myCoins[i]) {
       n++;
     }
     
-    myCoinsObj[coins[n]['symbol']] = coins[n];
+    myCoinsObj[coins[n]['id']] = coins[n];
         
     ssRates.getRange('A'+(i+2).toString()).setValue(myCoinsObj[myCoins[i]]['id']);
     ssRates.getRange('B'+(i+2).toString()).setValue(myCoinsObj[myCoins[i]]['name']);
@@ -133,7 +133,7 @@ function getData() {
 
 function getCoins() {
 
-  var url = 'https://api.coinmarketcap.com/v1/ticker/?convert=' + targetCurrency + '&limit=0?';
+  var url = 'https://api.coinmarketcap.com/v1/ticker/?limit=0&convert=' + targetCurrency;
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
   var json = response.getContentText();
   var data = JSON.parse(json);
