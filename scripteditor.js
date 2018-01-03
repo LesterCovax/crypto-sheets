@@ -189,7 +189,7 @@ function getData() {
   //
 
   //var vtcWallet = getVtcBalance("Your VTC Address");
-  //ssRates.getRange('B5').setValue(vtcWallet);
+  //ssWallets.getRange('B5').setValue(vtcWallet);
 }
 
 // XXXXXXXXXX DONT TOUCH UNLESS WIZARD XXXXXXXXXXXXX
