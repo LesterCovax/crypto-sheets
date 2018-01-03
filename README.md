@@ -29,7 +29,7 @@ https://www.codecademy.com/learn/introduction-to-javascript
 
     1. ![Delete existing code](https://i.imgur.com/RVyXaUzm.png)
 
-1. Paste [the contents of scripteditor.js](https://raw.githubusercontent.com/saitei/crypto-sheets/master/scripteditor.js) into the right-side pane
+1. Paste [the contents of scripteditor.js](scripteditor.js) into the right-side pane
 
     1. ![Paste script](https://i.imgur.com/5ktIBNom.png)
 
