@@ -1,12 +1,15 @@
 var queryString = Math.random();
-var ss = SpreadsheetApp.getActiveSpreadsheet();
+var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
 
 // ======
-// !!!
-// IMPORTANT: Create a sheet called 'Rates'.  This is where the values will be written
-// !!!
+// Gets or Creates a Cryto-Sheets Data spreadsheet
 // ======
-var ssRates = ss.getSheetByName('Rates');
+var DEFAULT_SHEET_NAME = 'Rates';
+
+var ssRates = activeSpreadsheet.getSheetByName(DEFAULT_SHEET_NAME);
+if (ssRates === null) {
+  ssRates = activeSpreadsheet.insertSheet(DEFAULT_SHEET_NAME);
+}
 
 // ====== Set the target currency =======
 // Don't change if using USD
