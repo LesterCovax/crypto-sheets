@@ -9,7 +9,7 @@ https://www.codecademy.com/learn/introduction-to-javascript
 
 ## Populating `Rates` sheet with currency data
 
-1. Create [a new Google Sheets spreadsheet](docs.google.com/spreadsheets) and name it something, or open an existing one
+1. Create [a new Google Sheets spreadsheet](https://docs.google.com/spreadsheets) and name it something, or open an existing one
 
     1. ![Create new spreadsheet](https://i.imgur.com/ARb3B0Dm.png)
 
