@@ -1,3 +1,7 @@
+/**
+ * @OnlyCurrentDoc
+ */
+
 // XXXXXXXXX DONT TOUCH XXXXXXXXXXXXX
 var queryString = Math.random();
 var ss = SpreadsheetApp.getActiveSpreadsheet();
