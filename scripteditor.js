@@ -4,15 +4,22 @@
 
 // XXXXXXXXX DONT TOUCH XXXXXXXXXXXXX
 var queryString = Math.random();
-var ss = SpreadsheetApp.getActiveSpreadsheet();
+
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 // ======
 // !!!
-// IMPORTANT: Create a sheet called 'Rates'.  This is where the values will be written.
+// IMPORTANT: If you do not already have a sheet called 'Rates' this will create it for you.  This is where the values will be written.
 // !!!
 // ======
+var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+var ssRates = activeSpreadsheet.getSheetByName('Rates');
 
+if (ssRates === null) {
+  ssRates = activeSpreadsheet.insertSheet('Rates');
+}
+
+var ss = SpreadsheetApp.getActiveSpreadsheet();
 var ssRates = ss.getSheetByName('Rates');
 
 // ======
@@ -129,7 +136,6 @@ function getData() {
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     };
   }
-
   //
   // =================================
   //
@@ -137,6 +143,18 @@ function getData() {
   //
   // =================================
 
+  //
+  // ===== Wallet Sheet Creator =====
+  // The commented-out code below will create the Wallets sheet for you
+  // =================================
+
+  //
+  // Uncomment variables to use
+  //
+
+  //var ssWallets = activeSpreadsheet.getSheetByName('Wallets');
+  //if (ssWallets === null) {ssWallets = activeSpreadsheet.insertSheet('Wallets');}
+  
   //
   // ===== BCH Wallet Balances =======
   // Add more as needed with different variable names
