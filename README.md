@@ -86,6 +86,10 @@ You can manually execute the script to test it by clicking the `Select function`
 
 There are comments in the code for anything that's not covered here.  If you had to use these instructions, the safe bet is to not modify anything else.
 
+## Using the Data
+
+solifugo has [put together a guide](https://github.com/saitei/crypto-sheets/wiki/Easy-guide-(I-hope)-to-create-a-Portfolio-Tracker) on how to organize data from the Rates sheet.
+
 ## How to Contribute
 
 * Help others in the cryptosheets subreddit (https://www.reddit.com/r/cryptosheets/).  You don't need to write any code to help others out.
