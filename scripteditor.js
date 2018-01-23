@@ -4,7 +4,6 @@
 
 // XXXXXXXXX DONT TOUCH XXXXXXXXXXXXX
 var queryString = Math.random();
-
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 // ======
@@ -12,15 +11,11 @@ var queryString = Math.random();
 // IMPORTANT: If you do not already have a sheet called 'Rates' this will create it for you.  This is where the values will be written.
 // !!!
 // ======
-var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-var ssRates = activeSpreadsheet.getSheetByName('Rates');
-
-if (ssRates === null) {
-  ssRates = activeSpreadsheet.insertSheet('Rates');
-}
-
 var ss = SpreadsheetApp.getActiveSpreadsheet();
 var ssRates = ss.getSheetByName('Rates');
+if (ssRates === null) {
+  ssRates = ss.insertSheet('Rates');
+}
 
 // =+=+= Set the target currency =+=+=+=+
 // Don't change if using USD
