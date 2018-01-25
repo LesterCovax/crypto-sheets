@@ -130,7 +130,7 @@ function getData() {
     ssRates.getRange('L'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_1h']);
     ssRates.getRange('M'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_24h']);
     ssRates.getRange('N'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_7d']);
-    ssRates.getRange('O'+(i+2).toString()).setValue((((new Date(timeNow.getTime()) / 1000 ) - (myCoinsObj[myCoins[i]]['last_updated'])) / 60).toFixed(2) + ' Minutes Ago');
+    ssRates.getRange('O'+(c).toString()).setValue((((new Date(timeNow.getTime()) / 1000 ) - (myCoinsObj[myCoins[i]]['last_updated'])) / 60).toFixed(2) + ' Minutes Ago');
     if (targetCurrency !== 'usd') {
       ssRates.getRange('P'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['price_' + targetCurrency]);
       ssRates.getRange('Q'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['24h_volume_' + targetCurrency]);
