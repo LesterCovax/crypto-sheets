@@ -34,7 +34,7 @@ function getData() {
   
 /* ==============================================
         Creates menu button for refreshing
-    Add an On Open trigger for function onOpen() 
+   runs if there is an on open trigger for getData
    ============================================== */  
   
     var ui = SpreadsheetApp.getUi();
