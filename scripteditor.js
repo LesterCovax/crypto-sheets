@@ -2,43 +2,54 @@
  * @OnlyCurrentDoc
  */
 
-// XXXXXXXXX DONT TOUCH XXXXXXXXXXXXX
+// ================ DON'T TOUCH =================
 var queryString = Math.random();
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// ============================================== 
 
-// ======
-// !!!
-// IMPORTANT: If you do not already have a sheet called 'Rates' this will create it for you.  This is where the values will be written.
-// !!!
-// ======
+/* ==============================================
+  If you do not already have a sheet called 'Rates' this will create it for you. 
+   ============================================== */
 var ss = SpreadsheetApp.getActiveSpreadsheet();
 var ssRates = ss.getSheetByName('Rates');
 if (ssRates === null) {
   ssRates = ss.insertSheet('Rates');
 }
 
-// =+=+= Set the target currency =+=+=+=+
-// Don't change if using USD
-// Possible values: 
-  // "aud", "brl", "cad", "chf", "clp", "cny", "czk", "dkk", "eur", "gbp", "hkd", "huf", 
-  // "idr", "ils", "inr", "jpy", "krw", "mxn", "myr", "nok", "nzd", "php", "pkr", "pln", 
-  // "rub", "sek", "sgd", "thb", "try", "twd", "usd", "zar"
-// =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+/* ==============================================
+  Don't change if using USD
+    Possible values: 
+      "aud", "brl", "cad", "chf", "clp", "cny", "czk", "dkk", "eur", "gbp", "hkd", "huf", 
+      "idr", "ils", "inr", "jpy", "krw", "mxn", "myr", "nok", "nzd", "php", "pkr", "pln", 
+      "rub", "sek", "sgd", "thb", "try", "twd", "usd", "zar"
+   ============================================== */
+
 var targetCurrency = 'usd'
 
-// XXXXXXXX DONT TOUCH XXXXXXXXXX
-// Grabs all CoinMarketCap data
+// ================ DON'T TOUCH =================
 if (typeof targetCurrency == 'undefined' || targetCurrency == '') {targetCurrency = 'usd'};
 var coins = getCoins();
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// ============================================== 
 
 function getData() {
+  
+/* ==============================================
+        Creates menu button for refreshing
+    Add an On Open trigger for function onOpen() 
+   ============================================== */  
+  
+    var ui = SpreadsheetApp.getUi();
+    ui.createMenu('crypto-sheets')
+      .addItem('Refresh Rates', 'getData')
+      .addItem('Refresh Global', 'getGlobal')
+      .addSeparator()
+      .addItem('About', 'about')  
+      .addToUi();
 
-  // =+=+=+ Coins to Track =+=+=+
-  // Enter the coins you want tracked, one per line, in single quotes, followed by a comma
-  // Use the value in the 'id' field here: https://api.coinmarketcap.com/v1/ticker/?limit=0
-  // If you're getting errors, you may be using the wrong 'id'.  Double-check the values.
-  // =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+/*   ========= Coins to Track ====================
+   Enter the coins you want tracked, one per line, in single quotes, followed by a comma
+   Use the value in the 'id' field here: https://api.coinmarketcap.com/v1/ticker/?limit=0
+   If you're getting errors, you may be using the wrong 'id'.  Double-check the values.
+     ============================================= */
   
   var myCoins = [
     'ark',
@@ -52,12 +63,13 @@ function getData() {
     'vertcoin'
   ]
 
-  // XXXXXXXX DONT TOUCH UNLESS WIZARD XXXXXXXXXXX
-  //
-  // Creates column headers.  Don't change unless you know what you're doing.
-  // If there is data you don't want, just hide the column in your spreadsheet
-  // ...or simply don't reference it
-  //   \/     \/    \/    \/    \/    \/    \/
+/*   ========= DONT TOUCH UNLESS WIZARD ==========
+
+    Creates column headers.  Don't change unless you know what you're doing.
+    If there is data you don't want, just hide the column in your spreadsheet
+    ...or simply don't reference it
+    
+     \/     \/    \/    \/    \/    \/    \/   */ 
   
   ssRates.getRange('A1').setValue("ID");
   ssRates.getRange('B1').setValue("Name");
@@ -79,18 +91,18 @@ function getData() {
     ssRates.getRange('P1').setValue("Price " + targetCurrency.toUpperCase());
     ssRates.getRange('Q1').setValue("24H Volume " + targetCurrency.toUpperCase());
     ssRates.getRange('R1').setValue("Market Cap " + targetCurrency.toUpperCase());
-  };
+  };  
   
-  //   /\      /\      /\      /\       /\  
-  // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+/*     /\      /\      /\      /\       /\  
+     ============================================= */
 
-
-  // XXXXXXXX DONT TOUCH UNLESS WIZARD XXXXXXXXXX
-  //
-  // Creating new Object with our coins for later use.  
-  // Each Object's key is the coin symbol
-  //
-  //      \/       \/     \/     \/     \/
+  
+  /* ========= DONT TOUCH UNLESS WIZARD ==========
+  
+     Creating new Object with our coins for later use.  
+     Each Object's key is the coin symbol
+     
+       \/     \/    \/    \/    \/    \/    \/   */ 
   
   var myCoinsObj = {};
   var myCoinsCount = myCoins.length;
@@ -101,6 +113,7 @@ function getData() {
       n++;
     }
     
+    var timeNow = new Date();    
     myCoinsObj[coins[n]['id']] = coins[n];
         
     ssRates.getRange('A'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['id']);
@@ -117,69 +130,64 @@ function getData() {
     ssRates.getRange('L'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_1h']);
     ssRates.getRange('M'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_24h']);
     ssRates.getRange('N'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_7d']);
-    ssRates.getRange('O'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['last_updated']);
+    ssRates.getRange('O'+(i+2).toString()).setValue((((new Date(timeNow.getTime()) / 1000 ) - (myCoinsObj[myCoins[i]]['last_updated'])) / 60).toFixed(2) + ' Minutes Ago');
     if (targetCurrency !== 'usd') {
       ssRates.getRange('P'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['price_' + targetCurrency]);
       ssRates.getRange('Q'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['24h_volume_' + targetCurrency]);
       ssRates.getRange('R'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['market_cap_' + targetCurrency]);
   
-  //  /\     /\     /\     /\     /\     /\
-  // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+/*     /\      /\      /\      /\       /\  
+     ============================================= */
     };
-  }
+  } 
+ 
+/* ==============================================
 
-  //
-  // =================================
-  //
-  //   WALLET BALANCE CONFIGURATION
-  //
-  // =================================
+             WALLET BALANCE CONFIGURATION
+  
+   ============================================== */   
 
   
-  //
-  // ===== Wallet Sheet Creator ========================================
-  // Uncomment the lines of code below
-  // It will create the Wallets sheet for you
-  // If using the Wallets sheet ALWAYS leave it uncommented
-  // ===================================================================
+/* ===== Wallet Sheet Creator ========================================
+     Uncomment the lines of code below
+     It will create the Wallets sheet for you
+     If using the Wallets sheet ALWAYS leave it uncommented
+   =================================================================== */
 
   //var ssWallets = activeSpreadsheet.getSheetByName('Wallets');
   //if (ssWallets === null) {ssWallets = activeSpreadsheet.insertSheet('Wallets');}
 
 
-  //
-  // ===== BCH Wallet Balances =========================================
-  // Uncomment the lines of code below
-  // Set the variable by pasting your Address inside of the ("") 
-  // Change getRange('A1') and getRange('B1') to match the row you want
-  // ===================================================================
-
+/* ===== BCH Wallet Balances =========================================
+     Uncomment the lines of code below
+     Set the variable by pasting your Address inside of the ("") 
+     Change getRange('A1') and getRange('B1') to match the row you want
+   =================================================================== */
+  
   //var bchWallet = getBchBalance("Your BCH Address");
   //ssWallets.getRange('A1').setValue("BCH Wallet");
   //ssWallets.getRange('B1').setValue(bchWallet);
 
 
-  //
-  // ===== BTC Wallet Balances =========================================
-  // Uncomment the lines of code below
-  // Set the variable by pasting your Address inside of the ("") 
-  // Change getRange('A2') and getRange('B2') to match the row you want
-  // ===================================================================
+/* ===== BTC Wallet Balances =========================================
+     Uncomment the lines of code below
+     Set the variable by pasting your Address inside of the ("") 
+     Change getRange('A2') and getRange('B2') to match the row you want
+   =================================================================== */
 
   //var btcWallet = getBtcBalance("Your BTC Address");
   //ssWallets.getRange('A2').setValue("BTC Wallet");
   //ssWallets.getRange('B2').setValue(btcWallet);  
   
 
-  //
-  // ===== Ethereum Wallet Balances ====================================
-  // Create an account on Etherscan.io
-  // Create an API key at https://etherscan.io/myapikey
-  // Uncomment the lines of code below
-  // Set the API key variable by pasting your API key inside of the ("") 
-  // Set the address variable by pasting your Address inside of the ("") 
-  // Change getRange('A3') and getRange('B3') to match the row you want
-  // ===================================================================
+/* ===== Ethereum Wallet Balances ====================================
+     Create an account on Etherscan.io
+     Create an API key at https://etherscan.io/myapikey
+     Uncomment the lines of code below
+     Set the API key variable by pasting your API key inside of the ("") 
+     Set the address variable by pasting your Address inside of the ("") 
+     Change getRange('A3') and getRange('B3') to match the row you want
+   =================================================================== */
 
   //var ethApiKey = "Your Etherscan API Key";
   //var ethWallet = getEthBalance(ethApiKey,"Your ETH Address");
@@ -187,50 +195,47 @@ function getData() {
   //ssWallets.getRange('B3').setValue(ethWallet);
   
   
-  //
-  // ===== DGB wallet balances =========================================
-  // Uncomment the lines of code below
-  // Set the variable by pasting your Address inside of the ("") 
-  // Change getRange('A4') and getRange('B4') to match the row you want
-  // ===================================================================
+/* ===== DGB wallet balances =========================================
+     Uncomment the lines of code below
+     Set the variable by pasting your Address inside of the ("") 
+     Change getRange('A4') and getRange('B4') to match the row you want
+   =================================================================== */
 
   //var dgbWallet = getDgbBalance("Your DGB Address");
   //ssWallets.getRange('A4').setValue("DGB Wallet");
   //ssWallets.getRange('B4').setValue(dgbWallet);
 
   
-  //
-  // ===== LTC wallet balances =========================================
-  // Uncomment the lines of code below
-  // Set the variable by pasting your Address inside of the ("") 
-  // Change getRange('A5') and getRange('B5') to match the row you want
-  // ===================================================================
+/* ===== LTC wallet balances =========================================
+     Uncomment the lines of code below
+     Set the variable by pasting your Address inside of the ("") 
+     Change getRange('A5') and getRange('B5') to match the row you want
+   =================================================================== */
 
   //var ltcWallet = getLtcBalance("Your LTC Address");
   //ssWallets.getRange('A5').setValue("LTC Wallet");
   //ssWallets.getRange('B5').setValue(ltcWallet);
 
   
-  //
-  // ===== VTC wallet balances =========================================
-  // Uncomment the lines of code below
-  // Set the variable by pasting your Address inside of the ("") 
-  // Change getRange('A5') and getRange('B5') to match the row you want
-  // ===================================================================
+/* ===== VTC wallet balances =========================================
+     Uncomment the lines of code below
+     Set the variable by pasting your Address inside of the ("") 
+     Change getRange('A6') and getRange('B6') to match the row you want
+   =================================================================== */
 
   //var vtcWallet = getVtcBalance("Your VTC Address");
   //ssWallets.getRange('A6').setValue("VTC Wallet");
   //ssWallets.getRange('B6').setValue(vtcWallet);
-  
- 
+
 }
 
-// XXXXXXXXXX DONT TOUCH UNLESS WIZARD XXXXXXXXXXXXX
-//
-// DON'T TOUCH ANYTHING BELOW UNLESS WIZARD
-//       IT MAKES THE MAGIC HAPPEN
-//
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+/* ============ DONT TOUCH UNLESS WIZARD ============
+
+        DON'T TOUCH ANYTHING BELOW UNLESS WIZARD
+               IT MAKES THE MAGIC HAPPEN
+               
+       \/     \/    \/    \/    \/    \/    \/   */ 
 
 function getCoins() {
 
@@ -240,6 +245,42 @@ function getCoins() {
   var data = JSON.parse(json);
     
   return data;
+}
+
+
+function getGlobal() {
+  
+  var ssGlobal = ss.getSheetByName('Global');
+  if (ssGlobal === null) {
+    ssGlobal = ss.insertSheet('Global');
+  } 
+  
+  var timeNow = new Date();
+  var url = 'https://api.coinmarketcap.com/v1/global/'
+  var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
+  var json = response.getContentText();
+  var globaldata = JSON.parse(json);
+  var tmcusd = globaldata['total_market_cap_usd'];     
+  var t24hvu = globaldata['total_24h_volume_usd'];
+  var bpmc = globaldata['bitcoin_percentage_of_market_cap'];  
+  var ac = globaldata['active_currencies'];  
+  var aa = globaldata['active_assets'];  
+  var am = globaldata['active_markets'];  
+  var lu = ((((new Date(timeNow.getTime()) / 1000 ) - globaldata['last_updated']) / 60).toFixed(2) + ' Minutes Ago');
+  ssGlobal.getRange('A1').setValue('total_market_cap_usd');
+  ssGlobal.getRange('A2').setValue('total_24h_volume_usd');
+  ssGlobal.getRange('A3').setValue('bitcoin_percentage_of_market_cap');
+  ssGlobal.getRange('A4').setValue('active_currencies');
+  ssGlobal.getRange('A5').setValue('active_assets');
+  ssGlobal.getRange('A6').setValue('active_markets'); 
+  ssGlobal.getRange('A7').setValue('last_updated');
+  ssGlobal.getRange('B1').setValue(tmcusd);
+  ssGlobal.getRange('B2').setValue(t24hvu);
+  ssGlobal.getRange('B3').setValue(bpmc+'%');
+  ssGlobal.getRange('B4').setValue(ac);
+  ssGlobal.getRange('B5').setValue(aa);
+  ssGlobal.getRange('B6').setValue(am); 
+  ssGlobal.getRange('B7').setValue(lu); 
 }
 
 
@@ -317,10 +358,18 @@ function getVtcBalance(vtcAddress) {
 }
 
 
-// XXXXXXXXXXXXXXXXXXXXXXX
-// !!! DEPRECATED !!!
-// USE AT YOUR OWN RISK
-// XXXXXXXXXXXXXXXXXXXXXXX
+function about() {
+  SpreadsheetApp.getUi()
+     .alert('Visit https://github.com/saitei/crypto-sheets to get the latest dev build, report issues, or request new features!');
+}
+
+/*     /\      /\      /\      /\       /\  
+     ============================================= */
+
+
+/* ==============================================
+                 !!! DEPRECATED !!!
+   ==============================================
 
 function getRate(currencyId) {
 
@@ -354,3 +403,4 @@ function getCurrencyConversion(currencyOne, currencyTwo) {
   
   return parseFloat(data['rates'][currencyTwo]);
 }
+     ============================================= */
