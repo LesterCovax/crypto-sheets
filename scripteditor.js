@@ -1,7 +1,7 @@
 /**
  * @OnlyCurrentDoc
  */
-
+  
 // ================ DON'T TOUCH =================
 var queryString = Math.random();
 // ============================================== 
@@ -25,31 +25,18 @@ if (ssRates === null) {
 
 var targetCurrency = 'usd'
 
-// ================ DON'T TOUCH =================
+// ================ DON'T TOUCH ===================
 if (typeof targetCurrency == 'undefined' || targetCurrency == '') {targetCurrency = 'usd'};
 var coins = getCoins();
-// ============================================== 
+// ================================================ 
 
 function getData() {
-  
-/* ==============================================
-        Creates menu button for refreshing
-   runs if there is an on open trigger for getData
-   ============================================== */  
-  
-    var ui = SpreadsheetApp.getUi();
-    ui.createMenu('crypto-sheets')
-      .addItem('Refresh Rates', 'getData')
-      .addItem('Refresh Global', 'getGlobal')
-      .addSeparator()
-      .addItem('About', 'about')  
-      .addToUi();
 
-/*   ========= Coins to Track ====================
+/*   ==============================================
    Enter the coins you want tracked, one per line, in single quotes, followed by a comma
    Use the value in the 'id' field here: https://api.coinmarketcap.com/v1/ticker/?limit=0
    If you're getting errors, you may be using the wrong 'id'.  Double-check the values.
-     ============================================= */
+     ============================================== */ 
   
   var myCoins = [
     'ark',
@@ -62,8 +49,23 @@ function getData() {
     'raiblocks',
     'vertcoin'
   ]
+ 
+  
+/*   ==============================================
+        Creates menu button for refreshing
+   runs if there is an on open trigger for getData 
+     ============================================== */ 
+  
+    var ui = SpreadsheetApp.getUi();
+    ui.createMenu('crypto-sheets')
+      .addItem('Refresh Rates', 'getData')
+      .addItem('Refresh Global', 'getGlobal')
+      .addSeparator()
+      .addItem('About', 'about')  
+      .addToUi();
 
-/*   ========= DONT TOUCH UNLESS WIZARD ==========
+
+/*   ========== DONT TOUCH UNLESS WIZARD ==========
 
     Creates column headers.  Don't change unless you know what you're doing.
     If there is data you don't want, just hide the column in your spreadsheet
@@ -94,15 +96,15 @@ function getData() {
   };  
   
 /*     /\      /\      /\      /\       /\  
-     ============================================= */
+     ============================================== */
+ 
 
-  
-  /* ========= DONT TOUCH UNLESS WIZARD ==========
+/*   ========== DONT TOUCH UNLESS WIZARD ==========
   
      Creating new Object with our coins for later use.  
      Each Object's key is the coin symbol
      
-       \/     \/    \/    \/    \/    \/    \/   */ 
+       \/     \/    \/    \/    \/    \/    \/     */ 
   
   var myCoinsObj = {};
   var myCoinsCount = myCoins.length;
@@ -137,16 +139,16 @@ function getData() {
       ssRates.getRange('R'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['market_cap_' + targetCurrency]);
   
 /*     /\      /\      /\      /\       /\  
-     ============================================= */
+     ============================================== */
     };
+  getGlobal() 
   } 
- 
-/* ==============================================
+  
+/*   ==============================================
 
              WALLET BALANCE CONFIGURATION
-  
-   ============================================== */   
 
+     ============================================== */   
   
 /* ===== Wallet Sheet Creator ========================================
      Uncomment the lines of code below
@@ -230,12 +232,12 @@ function getData() {
 }
 
 
-/* ============ DONT TOUCH UNLESS WIZARD ============
+/*   ========== DONT TOUCH UNLESS WIZARD ==========
 
         DON'T TOUCH ANYTHING BELOW UNLESS WIZARD
                IT MAKES THE MAGIC HAPPEN
                
-       \/     \/    \/    \/    \/    \/    \/   */ 
+       \/     \/    \/    \/    \/    \/    \/      */ 
 
 function getCoins() {
 
@@ -255,6 +257,8 @@ function getGlobal() {
     ssGlobal = ss.insertSheet('Global');
   } 
   
+  //Pause to not trigger API limit
+  Utilities.sleep(300);  
   var timeNow = new Date();
   var url = 'https://api.coinmarketcap.com/v1/global/'
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
@@ -364,12 +368,12 @@ function about() {
 }
 
 /*     /\      /\      /\      /\       /\  
-     ============================================= */
+     ============================================== */
 
 
-/* ==============================================
-                 !!! DEPRECATED !!!
-   ==============================================
+/*   ==============================================
+                   !!! DEPRECATED !!!
+     ==============================================
 
 function getRate(currencyId) {
 
@@ -403,4 +407,4 @@ function getCurrencyConversion(currencyOne, currencyTwo) {
   
   return parseFloat(data['rates'][currencyTwo]);
 }
-     ============================================= */
+     ============================================== */
