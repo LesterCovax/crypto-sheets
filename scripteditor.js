@@ -1,37 +1,49 @@
 /**
  * @OnlyCurrentDoc
  */
-  
-// ================ DON'T TOUCH =================
-var queryString = Math.random();
-// ============================================== 
-
-/* ==============================================
-  If you do not already have a sheet called 'Rates' this will create it for you. 
-   ============================================== */
-var ss = SpreadsheetApp.getActiveSpreadsheet();
-var ssRates = ss.getSheetByName('Rates');
-if (ssRates === null) {
-  ssRates = ss.insertSheet('Rates');
-}
-
-/* ==============================================
+ 
+/*   ==============================================
   Don't change if using USD
     Possible values: 
       "aud", "brl", "cad", "chf", "clp", "cny", "czk", "dkk", "eur", "gbp", "hkd", "huf", 
       "idr", "ils", "inr", "jpy", "krw", "mxn", "myr", "nok", "nzd", "php", "pkr", "pln", 
       "rub", "sek", "sgd", "thb", "try", "twd", "usd", "zar"
-   ============================================== */
+     ============================================== */
 
 var targetCurrency = 'usd'
 
-// ================ DON'T TOUCH ===================
+//   ============== DON'T TOUCH ===================
+var queryString = Math.random();
+
 if (typeof targetCurrency == 'undefined' || targetCurrency == '') {targetCurrency = 'usd'};
 var coins = getCoins();
-// ================================================ 
+
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+//   ============================================== 
+
+function onOpen() {
+  createMenu();
+  getData();
+  getGlobal();
+}
+
+function createMenu() {
+  
+/*   ==============================================
+           Creates menu button for refreshing
+     ============================================== */ 
+  
+    var ui = SpreadsheetApp.getUi();
+    ui.createMenu('crypto-sheets')
+      .addItem('Refresh Rates', 'getData')
+      .addItem('Refresh Global', 'getGlobal')
+      .addSeparator()
+      .addItem('About', 'about')  
+      .addToUi();
+}
 
 function getData() {
-
+  
 /*   ==============================================
    Enter the coins you want tracked, one per line, in single quotes, followed by a comma
    Use the value in the 'id' field here: https://api.coinmarketcap.com/v1/ticker/?limit=0
@@ -49,21 +61,14 @@ function getData() {
     'raiblocks',
     'vertcoin'
   ]
- 
-  
-/*   ==============================================
-        Creates menu button for refreshing
-   runs if there is an on open trigger for getData 
-     ============================================== */ 
-  
-    var ui = SpreadsheetApp.getUi();
-    ui.createMenu('crypto-sheets')
-      .addItem('Refresh Rates', 'getData')
-      .addItem('Refresh Global', 'getGlobal')
-      .addSeparator()
-      .addItem('About', 'about')  
-      .addToUi();
 
+// Setting up and formatting the Rates sheet  
+  var ssRates = ss.getSheetByName('Rates');
+  if (ssRates === null) {
+  ssRates = ss.insertSheet('Rates');
+  }
+  var ratesDateFormat = ssRates.getRange("O2:O");
+  ratesDateFormat.setNumberFormat("mmm dd h:mm A/P\".M.\"");  
 
 /*   ========== DONT TOUCH UNLESS WIZARD ==========
 
@@ -102,7 +107,7 @@ function getData() {
 /*   ========== DONT TOUCH UNLESS WIZARD ==========
   
      Creating new Object with our coins for later use.  
-     Each Object's key is the coin symbol
+     Each Object's key is the coin's ID
      
        \/     \/    \/    \/    \/    \/    \/     */ 
   
@@ -114,8 +119,7 @@ function getData() {
     while (coins[n]['id'] !== myCoins[i]) {
       n++;
     }
-    
-    var timeNow = new Date();    
+        
     myCoinsObj[coins[n]['id']] = coins[n];
         
     ssRates.getRange('A'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['id']);
@@ -129,21 +133,20 @@ function getData() {
     ssRates.getRange('I'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['available_supply']);
     ssRates.getRange('J'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['total_supply']);
     ssRates.getRange('K'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['max_supply']);
-    ssRates.getRange('L'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_1h']);
-    ssRates.getRange('M'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_24h']);
-    ssRates.getRange('N'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_7d']);
-    ssRates.getRange('O'+(c).toString()).setValue((((new Date(timeNow.getTime()) / 1000 ) - (myCoinsObj[myCoins[i]]['last_updated'])) / 60).toFixed(2) + ' Minutes Ago');
+    ssRates.getRange('L'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_1h']+'%');
+    ssRates.getRange('M'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_24h']+'%');
+    ssRates.getRange('N'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['percent_change_7d']+'%');
+    ssRates.getRange('O'+(c).toString()).setValue(new Date((myCoinsObj[myCoins[i]]['last_updated'])*1000));
     if (targetCurrency !== 'usd') {
       ssRates.getRange('P'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['price_' + targetCurrency]);
       ssRates.getRange('Q'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['24h_volume_' + targetCurrency]);
       ssRates.getRange('R'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['market_cap_' + targetCurrency]);
-  
+    };
+  };
+
 /*     /\      /\      /\      /\       /\  
      ============================================== */
-    };
-  getGlobal() 
-  } 
-  
+ 
 /*   ==============================================
 
              WALLET BALANCE CONFIGURATION
@@ -228,9 +231,8 @@ function getData() {
   //var vtcWallet = getVtcBalance("Your VTC Address");
   //ssWallets.getRange('A6').setValue("VTC Wallet");
   //ssWallets.getRange('B6').setValue(vtcWallet);
-
+  
 }
-
 
 /*   ========== DONT TOUCH UNLESS WIZARD ==========
 
@@ -252,10 +254,13 @@ function getCoins() {
 
 function getGlobal() {
   
+  //Setting up and formatting Global sheet
   var ssGlobal = ss.getSheetByName('Global');
   if (ssGlobal === null) {
     ssGlobal = ss.insertSheet('Global');
   } 
+  var globalDateFormat = ssGlobal.getRange("B7");
+  globalDateFormat.setNumberFormat("mmm dd h:mm A/P\".M.\"");
   
   //Pause to not trigger API limit
   Utilities.sleep(300);  
@@ -270,7 +275,7 @@ function getGlobal() {
   var ac = globaldata['active_currencies'];  
   var aa = globaldata['active_assets'];  
   var am = globaldata['active_markets'];  
-  var lu = ((((new Date(timeNow.getTime()) / 1000 ) - globaldata['last_updated']) / 60).toFixed(2) + ' Minutes Ago');
+  var lu = new Date((globaldata['last_updated']) * 1000);
   ssGlobal.getRange('A1').setValue('total_market_cap_usd');
   ssGlobal.getRange('A2').setValue('total_24h_volume_usd');
   ssGlobal.getRange('A3').setValue('bitcoin_percentage_of_market_cap');
@@ -363,6 +368,7 @@ function getVtcBalance(vtcAddress) {
 
 
 function about() {
+  
   SpreadsheetApp.getUi()
      .alert('Visit https://github.com/saitei/crypto-sheets to get the latest dev build, report issues, or request new features!');
 }
