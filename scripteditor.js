@@ -159,8 +159,8 @@ function getData() {
      If using the Wallets sheet ALWAYS leave it uncommented
    =================================================================== */
 
-  //var ssWallets = activeSpreadsheet.getSheetByName('Wallets');
-  //if (ssWallets === null) {ssWallets = activeSpreadsheet.insertSheet('Wallets');}
+  //var ssWallets = ss.getSheetByName('Wallets');
+  //if (ssWallets === null) {ssWallets = ss.insertSheet('Wallets');}
 
 
 /* ===== BCH Wallet Balances =========================================
