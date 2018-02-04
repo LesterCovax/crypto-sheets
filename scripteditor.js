@@ -19,9 +19,9 @@ if (ssRates === null) {
 
 // =+=+= Set the target currency =+=+=+=+
 // Don't change if using USD
-// Possible values: 
-  // "aud", "brl", "cad", "chf", "clp", "cny", "czk", "dkk", "eur", "gbp", "hkd", "huf", 
-  // "idr", "ils", "inr", "jpy", "krw", "mxn", "myr", "nok", "nzd", "php", "pkr", "pln", 
+// Possible values:
+  // "aud", "brl", "cad", "chf", "clp", "cny", "czk", "dkk", "eur", "gbp", "hkd", "huf",
+  // "idr", "ils", "inr", "jpy", "krw", "mxn", "myr", "nok", "nzd", "php", "pkr", "pln",
   // "rub", "sek", "sgd", "thb", "try", "twd", "usd", "zar"
 // =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 var targetCurrency = 'usd'
@@ -39,7 +39,7 @@ function getData() {
   // Use the value in the 'id' field here: https://api.coinmarketcap.com/v1/ticker/?limit=0
   // If you're getting errors, you may be using the wrong 'id'.  Double-check the values.
   // =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-  
+
   var myCoins = [
     'ark',
     'bitcoin-cash',
@@ -58,7 +58,7 @@ function getData() {
   // If there is data you don't want, just hide the column in your spreadsheet
   // ...or simply don't reference it
   //   \/     \/    \/    \/    \/    \/    \/
-  
+
   ssRates.getRange('A1').setValue("ID");
   ssRates.getRange('B1').setValue("Name");
   ssRates.getRange('C1').setValue("Symbol");
@@ -80,18 +80,18 @@ function getData() {
     ssRates.getRange('Q1').setValue("24H Volume " + targetCurrency.toUpperCase());
     ssRates.getRange('R1').setValue("Market Cap " + targetCurrency.toUpperCase());
   };
-  
-  //   /\      /\      /\      /\       /\  
+
+  //   /\      /\      /\      /\       /\
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
   // XXXXXXXX DONT TOUCH UNLESS WIZARD XXXXXXXXXX
   //
-  // Creating new Object with our coins for later use.  
+  // Creating new Object with our coins for later use.
   // Each Object's key is the coin symbol
   //
   //      \/       \/     \/     \/     \/
-  
+
   var myCoinsObj = {};
   var myCoinsCount = myCoins.length;
   for (var i = 0; i < myCoinsCount; i++) {
@@ -100,9 +100,9 @@ function getData() {
     while (coins[n]['id'] !== myCoins[i]) {
       n++;
     }
-    
+
     myCoinsObj[coins[n]['id']] = coins[n];
-        
+
     ssRates.getRange('A'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['id']);
     ssRates.getRange('B'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['name']);
     ssRates.getRange('C'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['symbol']);
@@ -122,7 +122,7 @@ function getData() {
       ssRates.getRange('P'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['price_' + targetCurrency]);
       ssRates.getRange('Q'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['24h_volume_' + targetCurrency]);
       ssRates.getRange('R'+(c).toString()).setValue(myCoinsObj[myCoins[i]]['market_cap_' + targetCurrency]);
-  
+
   //  /\     /\     /\     /\     /\     /\
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     };
@@ -135,7 +135,7 @@ function getData() {
   //
   // =================================
 
-  
+
   //
   // ===== Wallet Sheet Creator ========================================
   // Uncomment the lines of code below
@@ -143,14 +143,14 @@ function getData() {
   // If using the Wallets sheet ALWAYS leave it uncommented
   // ===================================================================
 
-  //var ssWallets = activeSpreadsheet.getSheetByName('Wallets');
-  //if (ssWallets === null) {ssWallets = activeSpreadsheet.insertSheet('Wallets');}
+  //var ssWallets = ss.getSheetByName('Wallets');
+  //if (ssWallets === null) {ssWallets = ss.insertSheet('Wallets');}
 
 
   //
   // ===== BCH Wallet Balances =========================================
   // Uncomment the lines of code below
-  // Set the variable by pasting your Address inside of the ("") 
+  // Set the variable by pasting your Address inside of the ("")
   // Change getRange('A1') and getRange('B1') to match the row you want
   // ===================================================================
 
@@ -162,22 +162,22 @@ function getData() {
   //
   // ===== BTC Wallet Balances =========================================
   // Uncomment the lines of code below
-  // Set the variable by pasting your Address inside of the ("") 
+  // Set the variable by pasting your Address inside of the ("")
   // Change getRange('A2') and getRange('B2') to match the row you want
   // ===================================================================
 
   //var btcWallet = getBtcBalance("Your BTC Address");
   //ssWallets.getRange('A2').setValue("BTC Wallet");
-  //ssWallets.getRange('B2').setValue(btcWallet);  
-  
+  //ssWallets.getRange('B2').setValue(btcWallet);
+
 
   //
   // ===== Ethereum Wallet Balances ====================================
   // Create an account on Etherscan.io
   // Create an API key at https://etherscan.io/myapikey
   // Uncomment the lines of code below
-  // Set the API key variable by pasting your API key inside of the ("") 
-  // Set the address variable by pasting your Address inside of the ("") 
+  // Set the API key variable by pasting your API key inside of the ("")
+  // Set the address variable by pasting your Address inside of the ("")
   // Change getRange('A3') and getRange('B3') to match the row you want
   // ===================================================================
 
@@ -185,12 +185,12 @@ function getData() {
   //var ethWallet = getEthBalance(ethApiKey,"Your ETH Address");
   //ssWallets.getRange('A3').setValue("ETH Wallet");
   //ssWallets.getRange('B3').setValue(ethWallet);
-  
-  
+
+
   //
   // ===== DGB wallet balances =========================================
   // Uncomment the lines of code below
-  // Set the variable by pasting your Address inside of the ("") 
+  // Set the variable by pasting your Address inside of the ("")
   // Change getRange('A4') and getRange('B4') to match the row you want
   // ===================================================================
 
@@ -198,11 +198,11 @@ function getData() {
   //ssWallets.getRange('A4').setValue("DGB Wallet");
   //ssWallets.getRange('B4').setValue(dgbWallet);
 
-  
+
   //
   // ===== LTC wallet balances =========================================
   // Uncomment the lines of code below
-  // Set the variable by pasting your Address inside of the ("") 
+  // Set the variable by pasting your Address inside of the ("")
   // Change getRange('A5') and getRange('B5') to match the row you want
   // ===================================================================
 
@@ -210,19 +210,19 @@ function getData() {
   //ssWallets.getRange('A5').setValue("LTC Wallet");
   //ssWallets.getRange('B5').setValue(ltcWallet);
 
-  
+
   //
   // ===== VTC wallet balances =========================================
   // Uncomment the lines of code below
-  // Set the variable by pasting your Address inside of the ("") 
+  // Set the variable by pasting your Address inside of the ("")
   // Change getRange('A5') and getRange('B5') to match the row you want
   // ===================================================================
 
   //var vtcWallet = getVtcBalance("Your VTC Address");
   //ssWallets.getRange('A6').setValue("VTC Wallet");
   //ssWallets.getRange('B6').setValue(vtcWallet);
-  
- 
+
+
 }
 
 // XXXXXXXXXX DONT TOUCH UNLESS WIZARD XXXXXXXXXXXXX
@@ -238,37 +238,37 @@ function getCoins() {
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
   var json = response.getContentText();
   var data = JSON.parse(json);
-    
+
   return data;
 }
 
 
 function getBchBalance(bchAddress) {
-    
+
   var url = 'https://bitcoincash.blockexplorer.com/api/addr/'+bchAddress+'/balance';
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
   var balance = response.getContentText();
   //Pause to not trigger API limit for multiple wallets
   Utilities.sleep(300);
-    
+
   return balance * Math.pow(10,-8);
 }
 
 
 function getBtcBalance(btcAddress) {
-    
+
   var url = 'https://blockexplorer.com/api/addr/'+btcAddress+'/balance';
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
   var balance = response.getContentText();
   //Pause to not trigger API limit for multiple wallets
   Utilities.sleep(300);
-    
+
   return balance * Math.pow(10,-8);
 }
 
 
 function getEthBalance(ethApiKey,ethAddress) {
-  
+
   var url = 'https://api.etherscan.io/api?module=account&action=balance&address='+ethAddress+'&tag=latest&apikey='+ethApiKey;
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
   var json = response.getContentText();
@@ -276,7 +276,7 @@ function getEthBalance(ethApiKey,ethAddress) {
   var balance = obj.result;
   //Pause to not trigger API limit for multiple wallets
   Utilities.sleep(300);
-    
+
   return balance * Math.pow(10,-18);
 }
 
@@ -294,7 +294,7 @@ function getDgbBalance(dgbAddress) {
 
 
 function getLtcBalance(ltcAddress) {
-  
+
   var url = 'https://chainz.cryptoid.info/ltc/api.dws?q=getbalance&a='+ltcAddress;
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
   var balance = response.getContentText();
@@ -306,13 +306,13 @@ function getLtcBalance(ltcAddress) {
 
 
 function getVtcBalance(vtcAddress) {
-  
+
   var url = 'http://explorer.vertcoin.info/ext/getbalance/'+vtcAddress;
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
   var balance = response.getContentText();
   //Pause to not trigger API limit for multiple wallets
   Utilities.sleep(300);
-    
+
   return balance;
 }
 
@@ -336,12 +336,12 @@ function getRate(currencyId) {
 }
 
 function getWebRate(currencyId) {
-  //Example Output: 
-  // '=IMPORTXML("https://coinmarketcap.com/currencies/zeeyx?3908288283","//span[@id=\'quote_price\']")';	
-  
+  //Example Output:
+  // '=IMPORTXML("https://coinmarketcap.com/currencies/zeeyx?3908288283","//span[@id=\'quote_price\']")';
+
   var coinScrape1 = '=IMPORTXML("https://coinmarketcap.com/currencies/';
   var coinScrape2 = '","//span[@id=\'quote_price\']")';
-  
+
   return coinScrape1 + currencyId + '?' + queryString + coinScrape2;
 }
 
@@ -351,6 +351,6 @@ function getCurrencyConversion(currencyOne, currencyTwo) {
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
   var json = response.getContentText();
   var data = JSON.parse(json);
-  
+
   return parseFloat(data['rates'][currencyTwo]);
 }
