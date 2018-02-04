@@ -169,28 +169,16 @@ function getData() {
   //if (ssWallets === null) {ssWallets = ss.insertSheet('Wallets');}
 
 /* 
-   ===== BCH Wallet Balances =========================================
+   ===== Nano Wallet Balances =========================================
      Uncomment the lines of code below
      Set the variable by pasting your Address inside of the ("") 
      Change getRange('A1') and getRange('B1') to match the row you want
    =================================================================== 
 */
 
-  //var bchWallet = getBchBalance("Your BCH Address");
-  //ssWallets.getRange('A1').setValue("BCH Wallet");
-  //ssWallets.getRange('B1').setValue(bchWallet);
-
-/* 
-   ===== BTC Wallet Balances =========================================
-     Uncomment the lines of code below
-     Set the variable by pasting your Address inside of the ("") 
-     Change getRange('A2') and getRange('B2') to match the row you want
-   =================================================================== 
-*/
-
-  //var btcWallet = getBtcBalance("Your BTC Address");
-  //ssWallets.getRange('A2').setValue("BTC Wallet");
-  //ssWallets.getRange('B2').setValue(btcWallet);
+  //var nanoWallet = getNanoBalance("Your Nano Address");
+  //ssWallets.getRange('A1').setValue("Nano Wallet");
+  //ssWallets.getRange('B1').setValue(nanoWallet);
 
 /*
    ===== Ethereum Wallet Balances ====================================
@@ -199,50 +187,74 @@ function getData() {
      Uncomment the lines of code below
      Set the API key variable by pasting your API key inside of the ("") 
      Set the address variable by pasting your Address inside of the ("") 
-     Change getRange('A3') and getRange('B3') to match the row you want
+     Change getRange('A2') and getRange('B2') to match the row you want
    =================================================================== 
 */
 
   //var ethApiKey = "Your Etherscan API Key";
   //var ethWallet = getEthBalance(ethApiKey,"Your ETH Address");
-  //ssWallets.getRange('A3').setValue("ETH Wallet");
-  //ssWallets.getRange('B3').setValue(ethWallet);
+  //ssWallets.getRange('A2').setValue("ETH Wallet");
+  //ssWallets.getRange('B2').setValue(ethWallet);
 
 /* 
-   ===== DGB wallet balances =========================================
+   ===== BCH Wallet Balances =========================================
+     Uncomment the lines of code below
+     Set the variable by pasting your Address inside of the ("") 
+     Change getRange('A3') and getRange('B3') to match the row you want
+   =================================================================== 
+*/
+
+  //var bchWallet = getBchBalance("Your BCH Address");
+  //ssWallets.getRange('A3').setValue("BCH Wallet");
+  //ssWallets.getRange('B3').setValue(bchWallet);
+
+/* 
+   ===== BTC Wallet Balances =========================================
      Uncomment the lines of code below
      Set the variable by pasting your Address inside of the ("") 
      Change getRange('A4') and getRange('B4') to match the row you want
    =================================================================== 
 */
 
-  //var dgbWallet = getDgbBalance("Your DGB Address");
-  //ssWallets.getRange('A4').setValue("DGB Wallet");
-  //ssWallets.getRange('B4').setValue(dgbWallet);
+  //var btcWallet = getBtcBalance("Your BTC Address");
+  //ssWallets.getRange('A4').setValue("BTC Wallet");
+  //ssWallets.getRange('B4').setValue(btcWallet);
 
 /* 
-   ===== LTC wallet balances =========================================
+   ===== DGB wallet balances =========================================
      Uncomment the lines of code below
      Set the variable by pasting your Address inside of the ("") 
      Change getRange('A5') and getRange('B5') to match the row you want
    =================================================================== 
 */
 
-  //var ltcWallet = getLtcBalance("Your LTC Address");
-  //ssWallets.getRange('A5').setValue("LTC Wallet");
-  //ssWallets.getRange('B5').setValue(ltcWallet);
+  //var dgbWallet = getDgbBalance("Your DGB Address");
+  //ssWallets.getRange('A5').setValue("DGB Wallet");
+  //ssWallets.getRange('B5').setValue(dgbWallet);
 
 /* 
-   ===== VTC wallet balances =========================================
+   ===== LTC wallet balances =========================================
      Uncomment the lines of code below
      Set the variable by pasting your Address inside of the ("") 
      Change getRange('A6') and getRange('B6') to match the row you want
    =================================================================== 
 */
 
+  //var ltcWallet = getLtcBalance("Your LTC Address");
+  //ssWallets.getRange('A6').setValue("LTC Wallet");
+  //ssWallets.getRange('B6').setValue(ltcWallet);
+
+/* 
+   ===== VTC wallet balances =========================================
+     Uncomment the lines of code below
+     Set the variable by pasting your Address inside of the ("") 
+     Change getRange('A7') and getRange('B7') to match the row you want
+   =================================================================== 
+*/
+
   //var vtcWallet = getVtcBalance("Your VTC Address");
-  //ssWallets.getRange('A6').setValue("VTC Wallet");
-  //ssWallets.getRange('B6').setValue(vtcWallet);
+  //ssWallets.getRange('A7').setValue("VTC Wallet");
+  //ssWallets.getRange('B7').setValue(vtcWallet);
 }
 
 /*
@@ -304,6 +316,30 @@ function getGlobal() {
 }
 
 
+function getNanoBalance(nanoAddress) {
+  var url = 'https://api.nano.club/accounts/'+nanoAddress+'/balances/total';
+  var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
+  var balance = response.getContentText();
+  //Pause to not trigger API limit for multiple wallets
+  Utilities.sleep(300);
+ 
+  return balance * Math.pow(10,-30);
+}
+
+
+function getEthBalance(ethApiKey,ethAddress) {
+  var url = 'https://api.etherscan.io/api?module=account&action=balance&address='+ethAddress+'&tag=latest&apikey='+ethApiKey;
+  var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
+  var json = response.getContentText();
+  var obj = JSON.parse(json);
+  var balance = obj.result;
+  //Pause to not trigger API limit for multiple wallets
+  Utilities.sleep(300);
+ 
+  return balance * Math.pow(10,-18);
+}
+
+
 function getBchBalance(bchAddress) {
   var url = 'https://bitcoincash.blockexplorer.com/api/addr/'+bchAddress+'/balance';
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
@@ -323,19 +359,6 @@ function getBtcBalance(btcAddress) {
   Utilities.sleep(300);
  
   return balance * Math.pow(10,-8);
-}
-
-
-function getEthBalance(ethApiKey,ethAddress) {
-  var url = 'https://api.etherscan.io/api?module=account&action=balance&address='+ethAddress+'&tag=latest&apikey='+ethApiKey;
-  var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
-  var json = response.getContentText();
-  var obj = JSON.parse(json);
-  var balance = obj.result;
-  //Pause to not trigger API limit for multiple wallets
-  Utilities.sleep(300);
- 
-  return balance * Math.pow(10,-18);
 }
 
 
