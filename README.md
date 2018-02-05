@@ -94,19 +94,19 @@ solifugo has [put together a guide](https://github.com/saitei/crypto-sheets/wiki
 
 ### Powered By
 
-[CoinMarketCap](https://coinmarketcap.com/)
-[Block Explorer](https://blockexplorer.com)
-[XRB.Network](http://xrb.network/)
-[Etherscan](https://etherscan.io)
-explorer.vertcoin.info
+* [CoinMarketCap](https://coinmarketcap.com/)
+* [Block Explorer](https://blockexplorer.com)
+* [XRB.Network](http://xrb.network/)
+* [Etherscan](https://etherscan.io)
+* explorer.vertcoin.info
 
 ### Acknowledgements
 
-solifugo
-iKrazy
-apiontek
-yukihirai0505
-Christopher Walken
+* solifugo
+* iKrazy
+* apiontek
+* yukihirai0505
+* Christopher Walken
 
 ### Donations
 
