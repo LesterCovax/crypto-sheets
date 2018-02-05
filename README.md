@@ -45,28 +45,18 @@ https://www.codecademy.com/learn/introduction-to-javascript
       
      1. ![New trigger](https://i.imgur.com/AzDXGQvm.png)
    
-   1. In the "Run" dropdown, choose "getData" and choose which triggers you'd like.  I use "Time-driven/Minutes/Every 15", and "From spreadsheet/On open".
+   1. In the "Run" dropdown, choose "onOpen" and choose which triggers will refresh the data.  We recommend using "Time-driven/Minutes/Every 30", and "From spreadsheet/On open."
       
-     1. ![Trigger definition](https://i.imgur.com/SyEoEVv.png)
+     1. ![Trigger definition](https://i.imgur.com/pk1rG2L.jpg)
 
-You can manually execute the script to test it by clicking the `Select function`, selecting `getData`, and clicking the run button (looks like the play symbol)
+1. You can manually execute the script to test it by clicking the `Select function`, selecting `onOpen`, and clicking the run button (looks like the play symbol)
    
-  ![Manually execute script](https://i.imgur.com/TP5BMTAm.png)
+   1. ![Manually execute script](https://i.imgur.com/zGC9Gwe.png)
 
-## Populating `Wallets` sheet with account balances
-*Note: Currently only supports BCH, BTC, ETH, and VTC.  Update other wallet balances manually in your spreadsheet for the time being.  Feel free to [submit an issue](https://github.com/saitei/crypto-sheets/issues) for other currencies.*
+## Populating `Wallets` Sheet with Account Balances
+*Note: Currently supports NANO, ETH, BCH, BTC, DGB, LTC, and VTC.  Update other wallet balances manually in your spreadsheet for the time being.  Feel free to [submit an issue](https://github.com/saitei/crypto-sheets/issues) for other currencies.*
 
-1. Make sure you have created a `Wallets` sheet
-   
-   1. ![Rates and Wallets sheets](https://i.imgur.com/WHO747jm.png)
-
-1. In the script editor, uncomment (delete the `//` before) `var ssWallets = ss.getSheetByName('Wallets')`
-   
-   1. ![uncomment wallets sheet](https://i.imgur.com/RUysbr9m.png)
-   
-   1. It should look like this
-     
-     1. ![uncommented code](https://i.imgur.com/iPO8UIlm.png)
+1. If you don't have a `Wallets` sheet, one will automatically be created for you
 
 1. Scroll down to the `WALLET BALANCE CONFIGURATION` section (around line 130)
    
@@ -81,6 +71,9 @@ You can manually execute the script to test it by clicking the `Select function`
       
      1. ![after wallet config](https://i.imgur.com/dTLu4cC.png)
 
+## Market Cap Data
+
+1. A sheet called `Global` will be automatically created for you, and populated with overall Market Cap Data.
 
 ## Advanced
 
@@ -103,19 +96,19 @@ solifugo has [put together a guide](https://github.com/saitei/crypto-sheets/wiki
 
 [CoinMarketCap](https://coinmarketcap.com/)
 [Block Explorer](https://blockexplorer.com)
+[XRB.Network](http://xrb.network/)
 [Etherscan](https://etherscan.io)
 explorer.vertcoin.info
 
 ### Acknowledgements
 
-apiontek
-iKrazy
 solifugo
+iKrazy
+apiontek
 yukihirai0505
 Christopher Walken
 
 ### Donations
-
 
 * XRB
    * **xrb_3ix8dfgn7hkz3choqi1qr6jgopoodh1jr1giwixzqaohks7d1f98dau45c11**
