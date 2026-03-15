@@ -1,4 +1,4 @@
-# Crypto Sheets
+<p align="center"><img src="https://repository-images.githubusercontent.com/115388286/1f497534-ff44-46c7-a69d-9a6959c723ed" alt="Crypto Sheets Banner" height="450"></p>
 
 This is a (javascript-based) tool to aid in creating your own crypto tracking spreadsheet.  It can automagically pull in current cryptocurrency rates, as well as your wallet balances.  It requires the use of Google Sheets and its built-in script editor.
 
